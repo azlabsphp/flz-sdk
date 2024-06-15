@@ -1,0 +1,26 @@
+{
+    "name": "drewlabs/flz-sdk",
+    "description": "Flooz mobile payment processor API client library",
+    "type": "library",
+    "require-dev": {
+        "drewlabs/mdl-cli": "^0.3.0",
+        "phpunit/phpunit": ">=8.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Drewlabs\\Flz\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "azandrew-sidoine",
+            "email": "azandrewdevelopper@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.2|^8.0",
+        "drewlabs/curl-client": "^0.4.0"
+    }
+}
