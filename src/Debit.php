@@ -60,6 +60,17 @@ final class Debit implements Jsonnable
 	 */
 	private $amount = null;
 
+
+	/**
+	 * Factory function to create a new debit instance
+	 * 
+	 * @return self 
+	 */
+	public static function new(): self
+	{
+		return new Debit;
+	}
+
 	/**
 	 * Returns a dictionnary/hash map representation of the current instance
 	 * 
@@ -84,7 +95,7 @@ final class Debit implements Jsonnable
 	 * 
 	 * @param array $json
 	 */
-	public static function fromJson(array $json = [ ])
+	public static function fromJson(array $json = [])
 	{
 		# code...
 		$self = new static;
@@ -258,5 +269,4 @@ final class Debit implements Jsonnable
 		# code...
 		return $this->amount;
 	}
-
 }

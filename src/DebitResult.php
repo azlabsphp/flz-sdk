@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Drewlabs\Flz;
 
+use Drewlabs\Flz\Contracts\ResponseInterface;
 
-final class DebitResult
+final class DebitResult implements ResponseInterface
 {
 
 	/**
@@ -44,6 +45,17 @@ final class DebitResult
 	 * @var string
 	 */
 	private $status = null;
+
+
+	public function isOk(): bool
+	{
+		return in_array(intval($this->status), [0, ]);
+	}
+
+	public function getReasonPhrase(): string
+	{
+		return $this->message ?? 'Unknown error';
+	}
 
 	/**
 	 * Returns a dictionnary/hash map representation of the current instance

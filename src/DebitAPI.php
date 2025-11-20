@@ -15,9 +15,12 @@ namespace Drewlabs\Flz;
 
 use Drewlabs\Flz\Traits\SendsHTTPRequest;
 use Drewlabs\Curl\Client as Curl;
+use Drewlabs\Flz\Contracts\Jsonnable;
+use Drewlabs\Flz\Contracts\RequestClientInterface;
+use Drewlabs\Flz\Contracts\ResponseInterface;
 use Drewlabs\Flz\Exceptions\RequestException;
 
-final class DebitAPI
+final class DebitAPI implements RequestClientInterface
 {
 
 	use SendsHTTPRequest;
@@ -47,14 +50,7 @@ final class DebitAPI
 		$this->curl = new Curl(rtrim($endpoint, '/'));
 	}
 
-	/**
-	 * @param Debit $req
-	 *
-	 * @return DebitResult
-	 *
-	 * @throws RequestException
-	 */
-	public function sendRequest(Debit $req): DebitResult
+	public function sendRequest(Jsonnable $req): ResponseInterface
 	{
 		$response = $this->sendHTTPRequest($this->curl, 'Flooz/DebitService/Debit', 'POST', $req->toJson(), [
 			'Content-Type' => 'application/json',

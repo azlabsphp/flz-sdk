@@ -40,7 +40,7 @@ final class DebitResultCodes
 	 */
 	public static function getMessage(string $code): string
 	{
-		return static::RESULT_CODES[$code] ?? 'Unknown';
+		return static::RESULT_CODES[$code] ?? 'Unknown Error';
 	}
 
 }
