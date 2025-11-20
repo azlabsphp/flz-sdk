@@ -40,7 +40,7 @@ final class DebitAPI
 	 *
 	 * @return void
 	 */
-	public function __construct(string $endpoint, string $token = null)
+	public function __construct(string $endpoint, ?string $token = null)
 	{
 		# code...
 		$this->token = $token;

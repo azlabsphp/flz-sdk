@@ -59,7 +59,7 @@ trait SendsHTTPRequest
         $curl->release();
         $curl->init();
         // Disable ssl verification to avoid any SSL error
-        $curl->disableSSLVerification();
+        // $curl->disableSSLVerification();
         $curl->setOption(\CURLOPT_RETURNTRANSFER, true);
     }
 
