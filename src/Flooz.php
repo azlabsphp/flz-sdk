@@ -13,19 +13,20 @@ declare(strict_types=1);
 
 namespace Drewlabs\Flz;
 
+use Drewlabs\Flz\Contracts\TokenFactoryInterface;
 
 final class Flooz
 {
 
 	/**
-	 * Creates a new flooz debit API client instance
+	 * creates a new flooz debit API client instance
 	 * 
 	 * @param string $endpoint
-	 * @param string $token
+	 * @param TokenFactoryInterface $token
 	 *
 	 * @return DebitAPI
 	 */
-	public static function NewDebit(string $endpoint, string $token): DebitAPI
+	public static function NewDebit(string $endpoint, TokenFactoryInterface $token): DebitAPI
 	{
 		return new DebitAPI($endpoint, $token);
 	}

@@ -18,6 +18,7 @@ use Drewlabs\Curl\Client as Curl;
 use Drewlabs\Flz\Contracts\Jsonnable;
 use Drewlabs\Flz\Contracts\RequestClientInterface;
 use Drewlabs\Flz\Contracts\ResponseInterface;
+use Drewlabs\Flz\Contracts\TokenFactoryInterface;
 use Drewlabs\Flz\Exceptions\RequestException;
 
 final class DebitAPI implements RequestClientInterface
@@ -26,14 +27,14 @@ final class DebitAPI implements RequestClientInterface
 	use SendsHTTPRequest;
 
 	/**
-	 * Debit API endpoint request authorization token
+	 * authorization token factory
 	 * 
-	 * @var string
+	 * @var TokenFactoryInterface
 	 */
-	private $token = null;
+	private $tokenFactory = null;
 
-	/** @var Curl */
-	private $curl;
+	/** @var string */
+	private $endpoint;
 
 	/**
 	 * Creates new class instance
@@ -43,21 +44,21 @@ final class DebitAPI implements RequestClientInterface
 	 *
 	 * @return void
 	 */
-	public function __construct(string $endpoint, ?string $token = null)
+	public function __construct(string $endpoint, TokenFactoryInterface $tokenFactory)
 	{
 		# code...
-		$this->token = $token;
-		$this->curl = new Curl(rtrim($endpoint, '/'));
+		$this->tokenFactory = $tokenFactory;
+		$this->endpoint = $endpoint;
 	}
 
 	public function sendRequest(Jsonnable $req): ResponseInterface
 	{
-		$response = $this->sendHTTPRequest($this->curl, 'Flooz/DebitService/Debit', 'POST', $req->toJson(), [
-			'Content-Type' => 'application/json',
-			'Authorization' => sprintf('%s', $this->token)
+		$response = $this->sendHTTPRequest( new Curl, sprintf("%s/payment/HttpService/json/cv/debit", rtrim($this->endpoint, '/')), 'POST', $req->toJson(), [
+			'content-type' => 'application/json',
+			'authorization' => sprintf('%s', $this->tokenFactory->createToken())
 		]);
 		if (($statusCode  = $response->getStatusCode()) && (200 > $statusCode || 204 < $statusCode)) {
-			throw new RequestException(sprintf("/POST Flooz/DebitService/Debit fails with status %d -  %s", $statusCode, $response->getBody()));
+			throw new RequestException(sprintf("/POST payment/HttpService/json/cv/debit fails with status %d -  %s", $statusCode, $response->getBody()));
 		}
 		return DebitResult::fromJson($response->json()->getBody());
 	}
@@ -69,12 +70,12 @@ final class DebitAPI implements RequestClientInterface
 	 */
 	public function checkStatus(DebitStatus $req): DebitStatusResult
 	{
-		$response = $this->sendHTTPRequest($this->curl, 'Flooz/DebitService/Verify', 'POST', $req->toJson(), [
-			'Content-Type' => 'application/json',
-			'Authorization' => sprintf('%s', $this->token)
+		$response = $this->sendHTTPRequest(new Curl, sprintf("%s/payment/HttpService/json/cv/Verify", rtrim($this->endpoint, '/')), 'POST', $req->toJson(), [
+			'content-type' => 'application/json',
+			'authorization' => sprintf('%s', $this->tokenFactory->createToken())
 		]);
 		if (($statusCode  = $response->getStatusCode()) && (200 > $statusCode || 204 < $statusCode)) {
-			throw new RequestException(sprintf("/POST Flooz/DebitService/Verify fails with status %d - %s", $statusCode, $response->getBody()));
+			throw new RequestException(sprintf("/POST payment/HttpService/json/cv/Verify fails with status %d - %s", $statusCode, $response->getBody()));
 		}
 		return DebitStatusResult::fromJson($response->json()->getBody());
 	}
@@ -86,8 +87,6 @@ final class DebitAPI implements RequestClientInterface
 	 */
 	public function handleCallback(DebitCallback $p, string $merchant): DebitStatusResult
 	{
-		// When a callback is received, we send a request to get transaction status
-		$req = new DebitStatus;
-		return $this->checkStatus($req->withReference($p->getTxnReference())->withMerchantId($merchant));
+		return $this->checkStatus(DebitStatus::new()->withReference($p->getTxnReference())->withMerchantId($merchant));
 	}
 }

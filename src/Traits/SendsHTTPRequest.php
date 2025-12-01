@@ -26,21 +26,18 @@ trait SendsHTTPRequest
     private function sendHTTPRequest(Curl $curl, string $endpoint, string $method = 'GET', array $body = [], array $headers = []): Response
     {
         $this->resetCurl($curl);
-
-        // Sends the request to the coris webservice host
-        $curl->send([
+        $options = [
             'method' => $method,
             'url' => $endpoint,
-            'headers' => array_merge([
-                'Content-Type' => 'application/json',
-                'Accept' => 'application/json',
-            ], $headers ?? []),
+            'headers' => $headers ?? [],
             'body' => $body
-        ]);
+        ];
+        // Sends the request to the coris webservice host
+        $curl->send($options);
 
         if (200 !== ($statusCode = $curl->getStatusCode())) {
             print_r([$curl->getErrorMessage(), $curl->getResponse(), $this->parseHeaders($curl->getResponseHeaders() ?? '')]);
-            throw new RequestException("/GET $endpoint : Unknown Request error", $statusCode);
+            throw new RequestException("/$method $endpoint : Unknown Request error", $statusCode);
         }
 
         return new Response($curl->getResponse() ?? '', intval($statusCode), $this->parseHeaders($curl->getResponseHeaders() ?? ''));

@@ -33,6 +33,16 @@ final class DebitStatus implements Jsonnable
 	private $merchant_id = null;
 
 	/**
+	 * class factory constructor
+	 * 
+	 * @return DebitStatus 
+	 */
+	public static function new()
+	{
+		return new DebitStatus;
+	}
+
+	/**
 	 * Returns a dictionnary/hash map representation of the current instance
 	 * 
 	 *
