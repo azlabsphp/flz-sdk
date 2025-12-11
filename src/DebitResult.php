@@ -84,7 +84,7 @@ final class DebitResult implements ResponseInterface
 		# code...
 		$self = new static;
 		$self->description = $json['description'] ?? null;
-		$self->message = $json['message'] ?? null;
+		$self->message = $json['message'] ?? static::getMessageByStatus($json['status'] ?? null);
 		$self->reference = $json['mrorrefid'] ?? null;
 		$self->status = $json['status'] ?? null;
 		return $self;
@@ -196,6 +196,18 @@ final class DebitResult implements ResponseInterface
 	{
 		# code...
 		return $this->status;
+	}
+
+	/**
+	 * resolve message using status code in the response
+	 * 
+	 * @param null|string $status
+	 * 
+	 * @return string
+	 */
+	private static function getMessageByStatus(?string $status) 
+	{
+		return DebitResultCodes::getMessage($status);
 	}
 
 }

@@ -100,7 +100,7 @@ final class DebitStatusMetadata
 	 *
 	 * @return bool
 	 */
-	public function isProcessed()
+	public function isProcessed(): bool
 	{
 		# code...
 	}

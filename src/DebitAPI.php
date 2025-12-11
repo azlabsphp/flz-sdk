@@ -16,12 +16,13 @@ namespace Drewlabs\Flz;
 use Drewlabs\Flz\Traits\SendsHTTPRequest;
 use Drewlabs\Curl\Client as Curl;
 use Drewlabs\Flz\Contracts\Jsonnable;
-use Drewlabs\Flz\Contracts\RequestClientInterface;
 use Drewlabs\Flz\Contracts\ResponseInterface;
 use Drewlabs\Flz\Contracts\TokenFactoryInterface;
+use Drewlabs\Flz\Contracts\TransactionClientInterface;
+use Drewlabs\Flz\Contracts\TransactionInterface;
 use Drewlabs\Flz\Exceptions\RequestException;
 
-final class DebitAPI implements RequestClientInterface
+final class DebitAPI implements TransactionClientInterface
 {
 
 	use SendsHTTPRequest;
@@ -64,16 +65,21 @@ final class DebitAPI implements RequestClientInterface
 	}
 
 	/**
-	 * @param DebitStatus $req
+	 * @param string $ref
+	 * @param string $accout
 	 *
-	 * @return DebitStatusResult
+	 * @return TransactionInterface
 	 */
-	public function checkStatus(DebitStatus $req): DebitStatusResult
+	public function  checkTransaction(string $ref, string $account): TransactionInterface
 	{
-		$response = $this->sendHTTPRequest(new Curl, sprintf("%s/payment/HttpService/json/cv/Verify", rtrim($this->endpoint, '/')), 'POST', $req->toJson(), [
+		$response = $this->sendHTTPRequest(new Curl, sprintf("%s/payment/HttpService/json/cv/Verify", rtrim($this->endpoint, '/')), 'POST', [
+			'mrchrefid' => $ref,
+			'partnermsisdn' => $account,
+		], [
 			'content-type' => 'application/json',
 			'authorization' => sprintf('%s', $this->tokenFactory->createToken())
 		]);
+
 		if (($statusCode  = $response->getStatusCode()) && (200 > $statusCode || 204 < $statusCode)) {
 			throw new RequestException(sprintf("/POST payment/HttpService/json/cv/Verify fails with status %d - %s", $statusCode, $response->getBody()));
 		}
@@ -83,10 +89,10 @@ final class DebitAPI implements RequestClientInterface
 	/**
 	 * @param DebitCallback $p
 	 *
-	 * @return DebitStatusResult
+	 * @return TransactionInterface
 	 */
-	public function handleCallback(DebitCallback $p, string $merchant): DebitStatusResult
+	public function handleCallback(DebitCallback $p, string $merchant): TransactionInterface
 	{
-		return $this->checkStatus(DebitStatus::new()->withReference($p->getTxnReference())->withMerchantId($merchant));
+		return $this->checkTransaction($p->getTxnReference(), $merchant);
 	}
 }

@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace Drewlabs\Flz;
 
+use Drewlabs\Flz\Contracts\TransactionInterface;
 
-final class DebitStatusResult
+final class DebitStatusResult implements TransactionInterface
 {
 
 	/**
@@ -37,6 +38,11 @@ final class DebitStatusResult
 	 * @var DebitStatusMetadata
 	 */
 	private $metadata = null;
+
+	public function isProcessed(): bool
+	{
+		return $this->metadata && $this->metadata->isProcessed();
+	}
 
 	/**
 	 * Returns a dictionnary/hash map representation of the current instance
