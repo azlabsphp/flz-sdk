@@ -83,6 +83,7 @@ final class DebitAPI implements TransactionClientInterface
 		if (($statusCode  = $response->getStatusCode()) && (200 > $statusCode || 204 < $statusCode)) {
 			throw new RequestException(sprintf("/POST payment/HttpService/json/cv/Verify fails with status %d - %s", $statusCode, $response->getBody()));
 		}
+		
 		return DebitStatusResult::fromJson($response->json()->getBody());
 	}
 

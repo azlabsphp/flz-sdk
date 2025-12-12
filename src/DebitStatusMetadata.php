@@ -20,7 +20,7 @@ final class DebitStatusMetadata
 	/**
 	 * @var string
 	 */
-	private $pushStatus = null;
+	private $push_status = null;
 
 	/**
 	 * @var string
@@ -39,7 +39,7 @@ final class DebitStatusMetadata
 	 * 
 	 * @var string
 	 */
-	private $txn_reference = null;
+	private $order_ref = null;
 
 	/**
 	 * Merchant provided name property [mrchname]
@@ -63,14 +63,14 @@ final class DebitStatusMetadata
 	private $source_txn_reference = null;
 
 	/**
-	 * Flooz payment reference property [referenceid]
+	 * payment reference property [referenceid]
 	 * 
 	 * @var string
 	 */
-	private $flooz_reference = null;
+	private $payment_ref = null;
 
 	/**
-	 * Flooz payment date property [validationdate]
+	 * payment date property [validationdate]
 	 * 
 	 * @var string
 	 */
@@ -89,9 +89,9 @@ final class DebitStatusMetadata
 	 *
 	 * @return bool
 	 */
-	public function isPushed()
+	public function isPushed(): bool
 	{
-		# code...
+		return !is_null($this->push_status) && strtoupper($this->push_status) === 'SUCCESS';
 	}
 
 	/**
@@ -103,6 +103,7 @@ final class DebitStatusMetadata
 	public function isProcessed(): bool
 	{
 		# code...
+		return !is_null($this->status) && intval($this->status) === 0;
 	}
 
 	/**
@@ -115,14 +116,14 @@ final class DebitStatusMetadata
 	{
 		# code...
 		return [
-			'pushussd' => $this->pushStatus,
+			'pushussd' => $this->push_status,
 			'callback' => $this->processStatus,
 			'amount' => $this->amount,
-			'mrchreference' => $this->txn_reference,
+			'mrchreference' => $this->order_ref,
 			'mrchname' => $this->merchant_name,
 			'msisdn' => $this->customer_id,
 			'mrorreference' => $this->source_txn_reference,
-			'referenceid' => $this->flooz_reference,
+			'referenceid' => $this->payment_ref,
 			'validationdate' => $this->date,
 			'status' => $this->status,
 		];
@@ -137,14 +138,14 @@ final class DebitStatusMetadata
 	{
 		# code...
 		$self = new static;
-		$self->pushStatus = $json['pushussd'] ?? null;
+		$self->push_status = $json['pushussd'] ?? null;
 		$self->processStatus = $json['callback'] ?? null;
 		$self->amount = $json['amount'] ?? null;
-		$self->txn_reference = $json['mrchreference'] ?? null;
+		$self->order_ref = $json['mrchreference'] ?? null;
 		$self->merchant_name = $json['mrchname'] ?? null;
 		$self->customer_id = $json['msisdn'] ?? null;
 		$self->source_txn_reference = $json['mrorreference'] ?? null;
-		$self->flooz_reference = $json['referenceid'] ?? null;
+		$self->payment_ref = $json['referenceid'] ?? null;
 		$self->date = $json['validationdate'] ?? null;
 		$self->status = $json['status'] ?? null;
 		return $self;
@@ -161,7 +162,7 @@ final class DebitStatusMetadata
 	{
 		# code...
 		$self = clone $this;
-		$self->pushStatus = $value;
+		$self->push_status = $value;
 		return $self;
 	}
 
@@ -206,7 +207,7 @@ final class DebitStatusMetadata
 	{
 		# code...
 		$self = clone $this;
-		$self->txn_reference = $value;
+		$self->order_ref = $value;
 		return $self;
 	}
 
@@ -266,7 +267,7 @@ final class DebitStatusMetadata
 	{
 		# code...
 		$self = clone $this;
-		$self->flooz_reference = $value;
+		$self->payment_ref = $value;
 		return $self;
 	}
 
@@ -309,7 +310,7 @@ final class DebitStatusMetadata
 	public function getPushStatus()
 	{
 		# code...
-		return $this->pushStatus;
+		return $this->push_status;
 	}
 
 	/**
@@ -345,7 +346,7 @@ final class DebitStatusMetadata
 	public function getTxnReference()
 	{
 		# code...
-		return $this->txn_reference;
+		return $this->order_ref;
 	}
 
 	/**
@@ -390,10 +391,10 @@ final class DebitStatusMetadata
 	 *
 	 * @return string
 	 */
-	public function getFloozReference()
+	public function getFlzReference()
 	{
 		# code...
-		return $this->flooz_reference;
+		return $this->payment_ref;
 	}
 
 	/**

@@ -44,6 +44,16 @@ final class DebitStatusResult implements TransactionInterface
 		return $this->metadata && $this->metadata->isProcessed();
 	}
 
+	public function getPaymentRef(): ?string
+	{
+		return $this->metadata ? $this->metadata->getFlzReference() : null;
+	}
+
+	public function getOrderRef(): ?string
+	{
+		return $this->metadata ? $this->metadata->getTxnReference() : null;
+	}
+
 	/**
 	 * Returns a dictionnary/hash map representation of the current instance
 	 * 
@@ -63,15 +73,16 @@ final class DebitStatusResult implements TransactionInterface
 	/**
 	 * Initialize class instance and properties from a dictionnary/hash map
 	 * 
-	 * @param array $json
+	 * @param mixed $json
 	 */
-	public static function fromJson(array $json = [ ])
+	public static function fromJson(array $json = []): static
 	{
 		# code...
 		$self = new static;
 		$self->message = $json['message'] ?? null;
 		$self->status = $json['status'] ?? null;
 		$self->metadata = DebitStatusMetadata::fromJson($json['details'] ?? []);
+
 		return $self;
 	}
 
@@ -155,5 +166,4 @@ final class DebitStatusResult implements TransactionInterface
 		# code...
 		return $this->metadata;
 	}
-
 }
