@@ -43,7 +43,6 @@ final class DebitAPI implements TransactionClientInterface
 	 * @param string $endpoint
 	 * @param string $token
 	 *
-	 * @return void
 	 */
 	public function __construct(string $endpoint, TokenFactoryInterface $tokenFactory)
 	{
