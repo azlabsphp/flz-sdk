@@ -207,6 +207,10 @@ final class DebitResult implements ResponseInterface
 	 */
 	private static function getMessageByStatus(?string $status) 
 	{
+		if (is_null($status)) {
+			return 'unknown error';
+		}
+		
 		return DebitResultCodes::getMessage($status);
 	}
 
