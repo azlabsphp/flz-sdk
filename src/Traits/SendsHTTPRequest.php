@@ -10,7 +10,6 @@ use Drewlabs\Flz\Exceptions\RequestException;
 
 trait SendsHTTPRequest
 {
-
     /**
      * Send request to the backend server and return the result to the caller
      * 

@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace Drewlabs\Flz\Contracts;
 
 interface ResponseInterface
 {
-    /**
+	/**
 	 * boolean flag which indicates that the request completed successfully
 	 * 
 	 *

@@ -46,6 +46,21 @@ final class DebitResult implements ResponseInterface
 	 */
 	private $status = null;
 
+	/**
+	 * Initialize class instance and properties from a dictionnary/hash map
+	 * 
+	 * @param array $json
+	 */
+	public static function fromJson(array $json = [ ])
+	{
+		# code...
+		$self = new static;
+		$self->description = $json['description'] ?? null;
+		$self->message = $json['message'] ?? static::getMessageByStatus($json['status'] ?? null);
+		$self->reference = $json['mrorrefid'] ?? null;
+		$self->status = $json['status'] ?? null;
+		return $self;
+	}
 
 	public function isOk(): bool
 	{
@@ -72,22 +87,6 @@ final class DebitResult implements ResponseInterface
 			'mrorrefid' => $this->reference,
 			'status' => $this->status,
 		];
-	}
-
-	/**
-	 * Initialize class instance and properties from a dictionnary/hash map
-	 * 
-	 * @param array $json
-	 */
-	public static function fromJson(array $json = [ ])
-	{
-		# code...
-		$self = new static;
-		$self->description = $json['description'] ?? null;
-		$self->message = $json['message'] ?? static::getMessageByStatus($json['status'] ?? null);
-		$self->reference = $json['mrorrefid'] ?? null;
-		$self->status = $json['status'] ?? null;
-		return $self;
 	}
 
 	/**

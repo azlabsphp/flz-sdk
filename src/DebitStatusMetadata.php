@@ -25,7 +25,7 @@ final class DebitStatusMetadata
 	/**
 	 * @var string
 	 */
-	private $processStatus = null;
+	private $process_status = null;
 
 	/**
 	 * Amount property [amount]
@@ -117,7 +117,7 @@ final class DebitStatusMetadata
 		# code...
 		return [
 			'pushussd' => $this->push_status,
-			'callback' => $this->processStatus,
+			'callback' => $this->process_status,
 			'amount' => $this->amount,
 			'mrchreference' => $this->order_ref,
 			'mrchname' => $this->merchant_name,
@@ -139,7 +139,7 @@ final class DebitStatusMetadata
 		# code...
 		$self = new static;
 		$self->push_status = $json['pushussd'] ?? null;
-		$self->processStatus = $json['callback'] ?? null;
+		$self->process_status = $json['callback'] ?? null;
 		$self->amount = $json['amount'] ?? null;
 		$self->order_ref = $json['mrchreference'] ?? null;
 		$self->merchant_name = $json['mrchname'] ?? null;
@@ -177,7 +177,7 @@ final class DebitStatusMetadata
 	{
 		# code...
 		$self = clone $this;
-		$self->processStatus = $value;
+		$self->process_status = $value;
 		return $self;
 	}
 
@@ -322,7 +322,7 @@ final class DebitStatusMetadata
 	public function getProcessStatus()
 	{
 		# code...
-		return $this->processStatus;
+		return $this->process_status;
 	}
 
 	/**

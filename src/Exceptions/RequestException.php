@@ -4,7 +4,4 @@ namespace Drewlabs\Flz\Exceptions;
 
 use Exception;
 
-class RequestException extends Exception
-{
-
-}
+class RequestException extends Exception {}

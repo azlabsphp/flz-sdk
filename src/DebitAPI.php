@@ -32,7 +32,7 @@ final class DebitAPI implements TransactionClientInterface
 	 * 
 	 * @var TokenFactoryInterface
 	 */
-	private $tokenFactory = null;
+	private $token_factory = null;
 
 	/** @var string */
 	private $endpoint;
@@ -44,10 +44,10 @@ final class DebitAPI implements TransactionClientInterface
 	 * @param string $token
 	 *
 	 */
-	public function __construct(string $endpoint, TokenFactoryInterface $tokenFactory)
+	public function __construct(string $endpoint, TokenFactoryInterface $token_factory)
 	{
 		# code...
-		$this->tokenFactory = $tokenFactory;
+		$this->token_factory = $token_factory;
 		$this->endpoint = $endpoint;
 	}
 
@@ -55,7 +55,7 @@ final class DebitAPI implements TransactionClientInterface
 	{
 		$response = $this->sendHTTPRequest( new Curl, sprintf("%s/payment/HttpService/json/cv/debit", rtrim($this->endpoint, '/')), 'POST', $req->toJson(), [
 			'content-type' => 'application/json',
-			'authorization' => sprintf('%s', $this->tokenFactory->createToken())
+			'authorization' => sprintf('%s', $this->token_factory->createToken())
 		]);
 		if (($statusCode  = $response->getStatusCode()) && (200 > $statusCode || 204 < $statusCode)) {
 			throw new RequestException(sprintf("/POST payment/HttpService/json/cv/debit fails with status %d -  %s", $statusCode, $response->getBody()));
@@ -76,7 +76,7 @@ final class DebitAPI implements TransactionClientInterface
 			'partnermsisdn' => $account,
 		], [
 			'content-type' => 'application/json',
-			'authorization' => sprintf('%s', $this->tokenFactory->createToken())
+			'authorization' => sprintf('%s', $this->token_factory->createToken())
 		]);
 
 		if (($statusCode  = $response->getStatusCode()) && (200 > $statusCode || 204 < $statusCode)) {
