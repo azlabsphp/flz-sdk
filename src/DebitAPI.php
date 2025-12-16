@@ -19,7 +19,7 @@ use Drewlabs\Flz\Contracts\Jsonnable;
 use Drewlabs\Flz\Contracts\ResponseInterface;
 use Drewlabs\Flz\Contracts\TokenFactoryInterface;
 use Drewlabs\Flz\Contracts\TransactionClientInterface;
-use Drewlabs\Flz\Contracts\TransactionInterface;
+use Drewlabs\Flz\Contracts\TransactionStateInterface;
 use Drewlabs\Flz\Exceptions\RequestException;
 
 final class DebitAPI implements TransactionClientInterface
@@ -67,9 +67,9 @@ final class DebitAPI implements TransactionClientInterface
 	 * @param string $ref
 	 * @param string $accout
 	 *
-	 * @return TransactionInterface
+	 * @return TransactionStateInterface
 	 */
-	public function  checkTransaction(string $ref, string $account): TransactionInterface
+	public function  checkTransaction(string $ref, string $account): TransactionStateInterface
 	{
 		$response = $this->sendHTTPRequest(new Curl, sprintf("%s/payment/HttpService/json/cv/Verify", rtrim($this->endpoint, '/')), 'POST', [
 			'mrchrefid' => $ref,
@@ -89,9 +89,9 @@ final class DebitAPI implements TransactionClientInterface
 	/**
 	 * @param DebitCallback $p
 	 *
-	 * @return TransactionInterface
+	 * @return TransactionStateInterface
 	 */
-	public function handleCallback(DebitCallback $p, string $merchant): TransactionInterface
+	public function handleCallback(DebitCallback $p, string $merchant): TransactionStateInterface
 	{
 		return $this->checkTransaction($p->getTxnReference(), $merchant);
 	}

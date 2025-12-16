@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Drewlabs\Flz;
 
-use Drewlabs\Flz\Contracts\TransactionInterface;
+use Drewlabs\Flz\Contracts\TransactionStateInterface;
 
-final class DebitStatusResult implements TransactionInterface
+final class DebitStatusResult implements TransactionStateInterface
 {
 
 	/**
@@ -52,6 +52,17 @@ final class DebitStatusResult implements TransactionInterface
 	public function getOrderRef(): ?string
 	{
 		return $this->metadata ? $this->metadata->getTxnReference() : null;
+	}
+
+	public function getStatus(): int
+	{
+		return (int)$this->status;
+	}
+
+	public function getReasonPhrase(): string
+	{
+		# code...
+		return $this->message;
 	}
 
 	/**
@@ -129,30 +140,6 @@ final class DebitStatusResult implements TransactionInterface
 		$self = clone $this;
 		$self->metadata = $value;
 		return $self;
-	}
-
-	/**
-	 * Get message property value
-	 * 
-	 *
-	 * @return string
-	 */
-	public function getMessage()
-	{
-		# code...
-		return $this->message;
-	}
-
-	/**
-	 * Get status property value
-	 * 
-	 *
-	 * @return string
-	 */
-	public function getStatus()
-	{
-		# code...
-		return $this->status;
 	}
 
 	/**

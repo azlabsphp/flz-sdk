@@ -11,7 +11,7 @@ interface TransactionClientInterface extends RequestClientInterface
      * @param string $ref 
      * @param string $account Account that is updated by the transation (Typically the merchant platform code)
      * 
-     * @return TransactionInterface 
+     * @return TransactionStateInterface 
      */
-    public function checkTransaction(string $ref, string $account): TransactionInterface;
+    public function checkTransaction(string $ref, string $account): TransactionStateInterface;
 }
