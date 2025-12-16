@@ -19,7 +19,7 @@ final class Flooz
 {
 
 	/**
-	 * creates a new flooz debit API client instance
+	 * creates a new moov money debit API client instance
 	 * 
 	 * @param string $endpoint
 	 * @param TokenFactoryInterface $token

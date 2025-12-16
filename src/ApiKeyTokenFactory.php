@@ -45,7 +45,7 @@ final class ApiKeyTokenFactory implements TokenFactoryInterface
 	}
 
 	/**
-	 * creates authorization token for sending request to flooz endpoint
+	 * creates authorization token for sending request to moov money endpoint
 	 *
 	 * @return string
 	 */

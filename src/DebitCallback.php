@@ -25,11 +25,11 @@ final class DebitCallback
 	private $amount = null;
 
 	/**
-	 * Flooz payment reference property value [refid]
+	 * moov money payment reference property value [refid]
 	 * 
 	 * @var string
 	 */
-	private $flooz_reference = null;
+	private $payment_ref = null;
 
 	/**
 	 * Transaction/Invoice reference property [mrchrefid]
@@ -39,7 +39,7 @@ final class DebitCallback
 	private $txn_reference = null;
 
 	/**
-	 * Flooz customer id property [msisdn]
+	 * moov money customer id property [msisdn]
 	 * 
 	 * @var string
 	 */
@@ -70,7 +70,7 @@ final class DebitCallback
 		# code...
 		return [
 			'amount' => $this->amount,
-			'refid' => $this->flooz_reference,
+			'refid' => $this->payment_ref,
 			'mrchrefid' => $this->txn_reference,
 			'msisdn' => $this->customer_id,
 			'status' => $this->status,
@@ -88,7 +88,7 @@ final class DebitCallback
 		# code...
 		$self = new static;
 		$self->amount = $json['amount'] ?? null;
-		$self->flooz_reference = $json['refid'] ?? null;
+		$self->payment_ref = $json['refid'] ?? null;
 		$self->txn_reference = $json['mrchrefid'] ?? null;
 		$self->customer_id = $json['msisdn'] ?? null;
 		$self->status = $json['status'] ?? null;
@@ -112,17 +112,17 @@ final class DebitCallback
 	}
 
 	/**
-	 * Set flooz_reference property value
+	 * Set payment_ref property value
 	 * 
 	 * @param string $value
 	 *
 	 * @return self
 	 */
-	public function withFloozReference(string $value)
+	public function withPaymentRef(string $value)
 	{
 		# code...
 		$self = clone $this;
-		$self->flooz_reference = $value;
+		$self->payment_ref = $value;
 		return $self;
 	}
 
@@ -199,15 +199,15 @@ final class DebitCallback
 	}
 
 	/**
-	 * Get flooz_reference property value
+	 * Get payment_ref property value
 	 * 
 	 *
 	 * @return string
 	 */
-	public function getFloozReference()
+	public function getPaymentRef()
 	{
 		# code...
-		return $this->flooz_reference;
+		return $this->payment_ref;
 	}
 
 	/**

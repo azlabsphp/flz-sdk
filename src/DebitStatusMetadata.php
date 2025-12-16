@@ -49,7 +49,7 @@ final class DebitStatusMetadata
 	private $merchant_name = null;
 
 	/**
-	 * Flooz customer id property [msisdn]
+	 * moov money customer id property [msisdn]
 	 * 
 	 * @var string
 	 */
@@ -84,7 +84,7 @@ final class DebitStatusMetadata
 	private $status = null;
 
 	/**
-	 * returns a boolean flag that indicates if push was successfully handled by flooz servers
+	 * returns a boolean flag that indicates if push was successfully handled by moov money servers
 	 * 
 	 *
 	 * @return bool
@@ -257,13 +257,13 @@ final class DebitStatusMetadata
 	}
 
 	/**
-	 * Set flooz_reference property value
+	 * Set payment_ref property value
 	 * 
 	 * @param string $value
 	 *
 	 * @return self
 	 */
-	public function withFloozReference(string $value)
+	public function withPaymentRef(string $value)
 	{
 		# code...
 		$self = clone $this;
@@ -386,7 +386,7 @@ final class DebitStatusMetadata
 	}
 
 	/**
-	 * Get flooz_reference property value
+	 * Get payment_ref property value
 	 * 
 	 *
 	 * @return string

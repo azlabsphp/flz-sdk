@@ -19,7 +19,7 @@ final class Debit implements Jsonnable
 {
 
 	/**
-	 * Flooz customer id property [msisdn]
+	 * moov money customer id property [msisdn]
 	 * 
 	 * @var string
 	 */

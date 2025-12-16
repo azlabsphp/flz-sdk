@@ -1,6 +1,6 @@
 {
     "name": "drewlabs/flz-sdk",
-    "description": "Flooz mobile payment processor API client library",
+    "description": "Moov money payment processor API client library",
     "type": "library",
     "require-dev": {
         "drewlabs/mdl-cli": "^0.3.0",
