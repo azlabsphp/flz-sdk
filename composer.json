@@ -21,6 +21,6 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^7.2|^8.0",
-        "drewlabs/curl-client": "^0.1.9"
+        "drewlabs/curl-client": "^0.1.9|^0.4.0"
     }
 }
