@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Drewlabs\Flz;
 
-use Drewlabs\Flz\Traits\SendsHTTPRequest;
 use Drewlabs\Curl\Client as Curl;
 use Drewlabs\Flz\Contracts\Jsonnable;
 use Drewlabs\Flz\Contracts\ResponseInterface;
@@ -21,6 +20,7 @@ use Drewlabs\Flz\Contracts\TokenFactoryInterface;
 use Drewlabs\Flz\Contracts\TransactionClientInterface;
 use Drewlabs\Flz\Contracts\TransactionStateInterface;
 use Drewlabs\Flz\Exceptions\RequestException;
+use Drewlabs\Flz\Http\SendsHTTPRequest;
 
 final class DebitAPI implements TransactionClientInterface
 {

@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Drewlabs\Flz\Traits;
+namespace Drewlabs\Flz\Http;
 
 use Drewlabs\Curl\Client as Curl;
-use Drewlabs\Curl\Utils\Response;
 use Drewlabs\Flz\Exceptions\RequestException;
 
 trait SendsHTTPRequest

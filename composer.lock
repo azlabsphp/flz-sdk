@@ -4,29 +4,37 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25dc1f296afabc4923bad60f9d31fb66",
+    "content-hash": "3da96f02502e188ac202005fb5d50250",
     "packages": [
         {
             "name": "drewlabs/curl-client",
-            "version": "v0.4.1",
+            "version": "v0.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/azandrew-sidoine/drewlabs-curl-client.git",
-                "reference": "014f711e123eaf92a971c31dcb444f1713f4082f"
+                "reference": "dbe2f0a64c9fb15d9c9ab574bd446974d9fddcad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/azandrew-sidoine/drewlabs-curl-client/zipball/014f711e123eaf92a971c31dcb444f1713f4082f",
-                "reference": "014f711e123eaf92a971c31dcb444f1713f4082f",
+                "url": "https://api.github.com/repos/azandrew-sidoine/drewlabs-curl-client/zipball/dbe2f0a64c9fb15d9c9ab574bd446974d9fddcad",
+                "reference": "dbe2f0a64c9fb15d9c9ab574bd446974d9fddcad",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
-                "php": ">=7.2"
+                "php": ">=7.0"
             },
             "require-dev": {
                 "donatj/mock-webserver": "^2.5",
-                "phpunit/phpunit": ">=8.0"
+                "drewlabs/psr7": "^0.1.1",
+                "drewlabs/psr7-stream": "^1.2",
+                "phpunit/phpunit": ">=6.0",
+                "psr/http-client": "^1.0"
+            },
+            "suggest": {
+                "drewlabs/psr7": "Psr7 implementation require for Psr18Client curl client usage",
+                "drewlabs/psr7-stream": "Psr7 stream required for Psr18Client curl client usage",
+                "psr/http-client": "Expected to use Psr18Client curl client"
             },
             "type": "library",
             "autoload": {
@@ -51,9 +59,9 @@
             ],
             "support": {
                 "issues": "https://github.com/azandrew-sidoine/drewlabs-curl-client/issues",
-                "source": "https://github.com/azandrew-sidoine/drewlabs-curl-client/tree/v0.4.1"
+                "source": "https://github.com/azandrew-sidoine/drewlabs-curl-client/tree/v0.1.9"
             },
-            "time": "2025-03-24T21:13:04+00:00"
+            "time": "2022-12-08T18:42:35+00:00"
         }
     ],
     "packages-dev": [
